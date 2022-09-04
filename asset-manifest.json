@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/climate-aligned/frontend/static/css/main.5f675c09.css",
+    "main.js": "/climate-aligned/frontend/static/js/main.da532f27.js",
+    "static/js/787.cda612ba.chunk.js": "/climate-aligned/frontend/static/js/787.cda612ba.chunk.js",
+    "static/media/logo-full.png": "/climate-aligned/frontend/static/media/logo-full.289e36e838a5ff65e926.png",
+    "index.html": "/climate-aligned/frontend/index.html",
+    "main.5f675c09.css.map": "/climate-aligned/frontend/static/css/main.5f675c09.css.map",
+    "main.da532f27.js.map": "/climate-aligned/frontend/static/js/main.da532f27.js.map",
+    "787.cda612ba.chunk.js.map": "/climate-aligned/frontend/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5f675c09.css",
+    "static/js/main.da532f27.js"
+  ]
+}
