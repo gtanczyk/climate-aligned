@@ -1,29 +1,40 @@
 // @ts-ignore
-import {Button, Dropdown, Tipseen, TipseenImage} from "monday-ui-react-core"
+import {Button, IconButton, Dropdown, Tipseen, TipseenImage} from "monday-ui-react-core"
 // @ts-ignore
 import {LearnMore, ThumbsUp} from "monday-ui-react-core/dist/allIcons";
 import styled from "styled-components";
 
 import Questions, {Question} from "../data/questions";
-import {useMondayContext, useStorageUserSetting} from "../data/monday-hooks";
+import {useMondayContext, useStorageUserSetting, useStorageUserSettingWrite} from "../data/monday-hooks";
 import {useState} from "react";
 
 export default function Survey(props: {
     onHome: () => void;
 }) {
     const mondayContext = useMondayContext()
-    const surveyData = useStorageUserSetting(mondayContext?.user.id, "surveyData");
+    const [surveyData, reloadSurveyData] = useStorageUserSetting<Record<string, boolean>>(mondayContext?.user.id, "surveyData");
+    const settingWrite = useStorageUserSettingWrite();
 
     return <>
         <Button onClick={props.onHome}>Go back</Button>
         <p><b>Hello there!</b> Make your personal climate assessment:</p>
-        {Questions.map(question => <QuestionForm question={question}/>)}
+        {Questions.map(question => <QuestionForm key={question.text} question={question}
+                                                 isPositive={surveyData?.[question.text] === true}
+                                                 onChange={async (isPositive) => {
+                                                     await settingWrite(mondayContext?.user.id, "surveyData", {
+                                                         ...surveyData,
+                                                         [question.text]: isPositive
+                                                     })
+                                                     await reloadSurveyData();
+                                                 }
+                                                 }/>)}
     </>;
 }
 
-function QuestionForm(props: { question: Question }) {
+function QuestionForm(props: { question: Question, isPositive: boolean, onChange: (isPositive: boolean) => void }) {
     return <QuestionContainer>
-        <button><ThumbsUp/></button>
+        <IconButton icon={ThumbsUp} kind={props.isPositive ? IconButton.kinds.PRIMARY : IconButton.kinds.SECONDARY}
+                    onClick={() => props.onChange(!props.isPositive)}/>
         <QuestionInfo question={props.question}/>
     </QuestionContainer>
 }
@@ -49,8 +60,8 @@ function QuestionInfo(props: { question: Question }) {
                 <p>{props.question.description}</p>
                 <p><b>Action</b> {props.question.action}</p>
                 <div className="buttons">
-                    <Button leftIcon={ThumbsUp}>I already do it!</Button>
-                    <Button size={Button.sizes.SMALL} onClick={() => window.open(props.question.full)}>Read more</Button>
+                    <Button size={Button.sizes.SMALL} onClick={() => window.open(props.question.full)}>Read
+                        more</Button>
                 </div>
             </InfoDescription>
         </>}>
