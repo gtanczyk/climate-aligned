@@ -56,8 +56,11 @@ function QuestionStats(props: { question: Question, responses: { positive: numbe
 
 const StatsContainer = styled.div`
   display: inline-flex;
-  margin-bottom: 10px;
-  
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 50%;
+
   .positive, .negative {
     display: flex;
     align-items: center;
