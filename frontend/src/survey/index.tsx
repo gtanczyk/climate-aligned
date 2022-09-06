@@ -70,7 +70,7 @@ export function QuestionInfo(props: { question: Question }) {
 }
 
 const QuestionContainer = styled.div`
-  display: flex;
+  display: inline-flex;
   padding: 5px;
   align-items: center;
   justify-content: space-between;
