@@ -6,7 +6,8 @@ import {MoveArrowUp, MoveArrowDown} from "monday-ui-react-core/dist/allIcons";
 import Questions, {Question} from "../data/questions";
 import {useMondayUsersRead, useStorageUserSettingRead} from "../data/monday-hooks";
 import {useEffect, useState} from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
+import {QuestionInfo} from "../survey";
 
 export default function Stats(props: {
     onHome: () => void;
@@ -47,9 +48,9 @@ function QuestionStats(props: { question: Question, responses: { positive: numbe
     const scalePositive = props.responses.positive / (props.responses.positive + props.responses.negative);
 
     return <StatsContainer>
-        <b className="question">{props.question.text}</b>
         <span className="positive" style={{"--scale": scalePositive} as React.CSSProperties}><MoveArrowUp/> {props.responses.positive}</span>
-        <span className="negative" data-scale={{"--scale": 1 - scalePositive} as React.CSSProperties}><MoveArrowDown/> {props.responses.negative}</span>
+        <span className="negative" style={{"--scale": 1 - scalePositive} as React.CSSProperties}><MoveArrowDown/> {props.responses.negative}</span>
+        <QuestionInfo question={props.question} />
     </StatsContainer>
 }
 
@@ -57,11 +58,6 @@ const StatsContainer = styled.div`
   display: flex;
   width: 50%;
   margin-bottom: 10px;
-  
-  .question {
-    padding: 5px 10px;
-    flex-grow: 1;
-  }
   
   .positive, .negative {
     display: flex;
@@ -78,5 +74,22 @@ const StatsContainer = styled.div`
   
   .negative {
     background-color: rgb(226, 68, 92);
+  }
+  
+  > span:last-child {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 10px;
+    
+    h4 {
+      margin: 8px 0px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    svg {
+      cursor: pointer;
+    }
   }
 `;

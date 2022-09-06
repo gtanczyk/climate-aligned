@@ -39,7 +39,7 @@ function QuestionForm(props: { question: Question, isPositive: boolean, onChange
     </QuestionContainer>
 }
 
-function QuestionInfo(props: { question: Question }) {
+export function QuestionInfo(props: { question: Question }) {
     const [visible, setVisible] = useState(false);
 
     const Trigger = () => <>
@@ -85,7 +85,11 @@ const QuestionContainer = styled.div`
     margin: 0;
     text-align: left;
     padding-left: 10px;
-    flex-grow: 1;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  svg {
     cursor: pointer;
   }
 `;
